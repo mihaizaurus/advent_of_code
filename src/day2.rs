@@ -76,8 +76,6 @@ fn can_be_dampened(report: &[i32]) -> bool {
 
         modified_report.remove(i);
 
-        println!("Report {:?}, modified {:?} is {}",report, modified_report, is_report_safe(&modified_report));
-
         if is_report_safe(&modified_report) {return true}
     }
     return false

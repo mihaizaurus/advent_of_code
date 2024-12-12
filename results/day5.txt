@@ -1,0 +1,2 @@
+Sum of validated updates middle values = 5108
+Sum of reordered updates middle values = 7380

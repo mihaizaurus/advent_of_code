@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{self, BufRead, Write};
 
-pub fn result() -> io::Result<()> {
+pub fn result() -> io::Result<(isize, isize)> {
     let input_path = "inputs/day5.txt";
     let output_path = "results/day5.txt";
 
@@ -15,7 +15,7 @@ pub fn result() -> io::Result<()> {
     writeln!(file, "Sum of validated updates middle values = {}",validated_middle_sum)?;
     writeln!(file, "Sum of reordered updates middle values = {}",reordered_middle_sum)?;
 
-    Ok(())
+    Ok((validated_middle_sum as isize, reordered_middle_sum as isize))
 }
 
 fn get_input_data(path: &str) -> io::Result<(Vec<(String, String)>,Vec<Vec<String>>)>{

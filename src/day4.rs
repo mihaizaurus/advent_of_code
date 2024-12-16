@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{self,BufRead, Write};
 
-pub fn result() -> io::Result<()> {
+pub fn result() -> io::Result<(isize, isize)> {
     let input_path = "inputs/day4.txt";
     let output_path = "results/day4.txt";
 
@@ -17,7 +17,7 @@ pub fn result() -> io::Result<()> {
     writeln!(file, "number of occurrences of '{}' found = {}",WORD,count_xmas)?;
     writeln!(file, "number of occurrences of 'X-MAS' found = {}",count_x_mas)?;
 
-    Ok(())
+    Ok((count_xmas as isize, count_x_mas as isize))
 }
 
 fn get_input_text(path: &str) -> io::Result<Vec<String>> {

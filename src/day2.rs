@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{self,BufRead, Write};
 
-pub fn result() -> io::Result<()> {
+pub fn result() -> io::Result<(isize, isize)> {
     let input_path = "inputs/day2.txt";
     let output_path = "results/day2.txt";
     
@@ -12,7 +12,7 @@ pub fn result() -> io::Result<()> {
 
     writeln!(file, "Number of safe reports = {}",safe_reports.len())?;
 
-    Ok(())
+    Ok((safe_reports.len() as isize, safe_reports.len() as isize))
 }
 
 fn get_inputs(path: &str) -> io::Result<Vec<Vec<i32>>> {

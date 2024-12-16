@@ -44,7 +44,7 @@ fn get_input(input_path: &str) -> io::Result<Vec<(usize, Vec<usize>)>>{
 
 fn assert_equation(result: usize, operands: Vec<usize>) -> bool {
     let mut possibilities = vec![(&operands,operands[0])];
-    let operators = vec!['+','*'];
+    let operators = vec!['+','*','|'];
     for i in 1..operands.len() {      
         let mut inner_possibilities = vec![];      
         for (_,local_eq) in possibilities {            
@@ -53,6 +53,7 @@ fn assert_equation(result: usize, operands: Vec<usize>) -> bool {
                 match operator {
                     '+' => temp_eq += operands[i],
                     '*' => temp_eq *= operands[i],
+                    '|' => temp_eq = (temp_eq.to_string() + operands[i].to_string().as_str()).parse::<usize>().unwrap(),
                     _ => ()
                 }
                 inner_possibilities.push((&operands,temp_eq));            

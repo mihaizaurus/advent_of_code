@@ -5,16 +5,18 @@ mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 
 fn main() -> io::Result<()> {
     println!("Hello, advent of code!");
     
-    day1::result()?; // Passed
-    day2::result()?; // Passed
-    day3::result()?; // Passed
-    day4::result()?; // Passed
-    day5::result()?; // Passed
-    day6::result()?;
+    // day1::result()?; // Passed
+    // day2::result()?; // Passed
+    // day3::result()?; // Passed
+    // day4::result()?; // Passed
+    // day5::result()?; // Passed
+    // day6::result()?; // Passed
+    day7::result()?;
 
     Ok(())
 }

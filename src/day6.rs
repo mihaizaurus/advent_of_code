@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{self, BufRead, BufReader, Write};
 use std::collections::HashSet;
 
-pub fn result() -> io::Result<()> {
+pub fn result() -> io::Result<(isize, isize)> {
     let input_path = "inputs/day6.txt";
     let output_path = "results/day6.txt";
 
@@ -32,7 +32,7 @@ pub fn result() -> io::Result<()> {
     
     // write_result(output_path, &map, &visited)?;
 
-    Ok(())
+    Ok((0, loops.len() as isize))
 }
 
 type Position = (isize, isize);

@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{self, BufRead, BufReader, Write};
 
-pub fn result() -> io::Result<()> {
+pub fn result() -> io::Result<(isize, isize)> {
     // let input_path = "inputs/day7.txt";
     let input_path = "inputs/day7.txt";
     let output_path = "results/day7.txt";
@@ -17,7 +17,7 @@ pub fn result() -> io::Result<()> {
     
     write_result(output_path, sum)?;
 
-    Ok(())
+    Ok((sum as isize, sum as isize))
 }
 
 fn get_input(input_path: &str) -> io::Result<Vec<(usize, Vec<usize>)>>{    

@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{self,BufRead, Write};
 
-pub fn result() -> io::Result<()> {
+pub fn result() -> io::Result<(isize, isize)> {
     let input_path = "inputs/day1.txt";
     let output_path = "results/day1.txt";
     let (mut list_left, mut list_right) = get_inputs(input_path)?;
@@ -18,7 +18,7 @@ pub fn result() -> io::Result<()> {
         writeln!(file, "distance sum = {}",dist)?;
         writeln!(file, "similarity score = {}",sim)?;
 
-        Ok(())
+        Ok((dist as isize, sim as isize))
     } 
     else {
         Err(io::Error::new(

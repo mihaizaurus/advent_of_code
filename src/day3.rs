@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{self, Read, Write};
 use regex::Regex;
 
-pub fn result() -> io::Result<()> {
+pub fn result() -> io::Result<(isize, isize)> {
     let input_path = "inputs/day3.txt";
     let output_path = "results/day3.txt";
     
@@ -17,7 +17,7 @@ pub fn result() -> io::Result<()> {
     writeln!(file, "sum of multipliers = {}",sum_of_mult)?;
     writeln!(file, "corrected sum of 'do()' multipliers = {}",corrected_sum)?;
 
-    Ok(())
+    Ok((sum_of_mult as isize, corrected_sum as isize))
 }
 
 fn get_inputs(path: &str) -> io::Result<String> {

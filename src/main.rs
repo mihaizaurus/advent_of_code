@@ -1,22 +1,22 @@
-use std::io;
-mod day1;
-mod day2;
-mod day3;
-mod day4;
-mod day5;
-mod day6;
-mod day7;
+use std::env;
+use AdventOfCode2024::run_day;
 
-fn main() -> io::Result<()> {
+fn main() {
     println!("Hello, advent of code!");
     
-    // day1::result()?; // Passed
-    // day2::result()?; // Passed
-    // day3::result()?; // Passed
-    // day4::result()?; // Passed
-    // day5::result()?; // Passed
-    // day6::result()?; // Passed
-    day7::result()?;
+    let args: Vec<String> = env::args().collect();
 
-    Ok(())
+    if args.len() < 2 {
+        eprintln!("Usage: {} <day>", args[0]);
+        return;
+    }
+
+    match args[1].parse::<usize>() {
+        Ok(day) => {
+            if let Err(err) = run_day(day) {
+                eprintln!("Error running day {}: {}", day, err);
+            }
+        },
+        Err(_) => eprintln!("Invalid Input. Please enter a valid day number. (Range 1-24)")
+    }
 }

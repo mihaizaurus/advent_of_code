@@ -9,6 +9,7 @@ pub mod day5;
 pub mod day6;
 pub mod day7;
 pub mod day8;
+pub mod day9;
 
 pub fn run_day(day: usize) -> Result<PuzzleAnswer, String> {
     let input_path = format!("inputs/day{}.txt", day); 
@@ -23,6 +24,7 @@ pub fn run_day(day: usize) -> Result<PuzzleAnswer, String> {
         6 => day6::result().map_err(|e| e.to_string()),
         7 => day7::result().map_err(|e| e.to_string()),
         8 => day8::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        9 => day9::result(&input_path, &output_path).map_err(|e| e.to_string()),
         _ => Err(format!("Day {} is not implemented or understood...", day)),
     }
 }

@@ -42,13 +42,13 @@ pub fn get_char_at((col, row): (usize, usize), map: &SimpleGrid) -> String {
     return map[row as usize].chars().nth(col as usize).unwrap().to_string()
 }
 
-pub fn get_neighbors(start: Position, neighbor: String, map: &SimpleGrid) -> HashSet<Position> {
-    let mut neighbors: HashSet<Position> = HashSet::new();
+pub fn get_neighbors(start: Position, neighbor: String, map: &SimpleGrid) -> Vec<Position> {
+    let mut neighbors: Vec<Position> = Vec::new();
 
     for direction in DIRECTIONS {
         if let Some(new_pos) = move_from(start, direction, &map) {
             if get_char_at((new_pos.0 as usize, new_pos.1 as usize), map) == neighbor {
-                neighbors.insert(new_pos);
+                neighbors.push(new_pos);
             };
         }        
     }

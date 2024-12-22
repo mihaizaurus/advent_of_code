@@ -2,9 +2,9 @@ use crate::common::types::{Position,SimpleGrid};
 use crate::common::utils::{get_char_at, get_neighbors};
 use std::collections::HashSet;
 
-pub fn result(map: SimpleGrid) -> isize {
+pub fn result(map: &SimpleGrid) -> isize {
     
-    let trailheads = get_trailheads(&map);
+    let trailheads = get_trailheads(map);
     let mut score = 0;
     for trailhead in trailheads {
         score += get_score(trailhead, &map);

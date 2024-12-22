@@ -15,6 +15,7 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
 
     let mut blocks_part1 = Blocks::new(&disk_map);
     let mut blocks_part2 = Blocks::new(&disk_map);
+
     let part1 = blocks_part1.reorder().sum();
     let part2 = blocks_part2.smart_reorder().sum();
 
@@ -87,6 +88,9 @@ impl Blocks {
                 } 
                 for j in 0..remaining_chunks.len() {
                     if let (None, ref mut empty_length, ref mut empty_start_index) = remaining_chunks[j] {
+                        if *empty_start_index > start_index {
+                            break;
+                        }
                         if *empty_length >= file_length {
                             reordered_chunks.push((Some(file_id), file_length, *empty_start_index));
                             if *empty_length > file_length {// Shrink the empty chunk

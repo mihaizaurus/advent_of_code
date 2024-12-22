@@ -1,2 +1,2 @@
 Puzzle 1 answer: 6262891638328
-Puzzle 2 answer: 8447293449921
+Puzzle 2 answer: 6287317016845

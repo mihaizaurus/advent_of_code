@@ -5,10 +5,10 @@ use std::io;
 use std::io::Write;
 use std::fs::File;
 use crate::common::types::PuzzleAnswer;
-use crate::common::utils::get_input_as_vector_128;
+use crate::common::utils::get_input_as_grid;
 
 pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
-    let input_stones = match get_input_as_vector_128(input_path) {
+    let farm = match get_input_as_grid(input_path) {
         Ok(input) => input,
         Err(err) => {
             eprintln!("Input could not be created from file at {}. Details: {}",input_path, err);
@@ -16,7 +16,7 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
         }
     };
 
-    let part1 = part1::result();
+    let part1 = part1::result(&farm);
     let part2 = part2::result();
 
     

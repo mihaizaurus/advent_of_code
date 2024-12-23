@@ -1,4 +1,4 @@
-pub type Position = (isize, isize);
+pub type Position = (usize, usize);
 pub type Direction = (isize, isize);
 pub type PuzzleAnswer = (isize, isize);
 pub type SimpleGrid = Vec<String>;

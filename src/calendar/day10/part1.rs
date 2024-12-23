@@ -21,7 +21,7 @@ fn get_trailheads(map: &SimpleGrid) -> Vec<Position> {
     for row in 0..map.len() {
         for col in 0..map[row].len() {
             if get_char_at((col, row), map) == "0" {
-                trailheads.push((col as isize, row as isize));
+                trailheads.push((col, row));
             }
         }
     }

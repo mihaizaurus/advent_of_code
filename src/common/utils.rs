@@ -96,11 +96,16 @@ pub fn get_neighbors(start: Position, neighbor: String, map: &SimpleGrid) -> Vec
 }
 
 pub fn move_from(position: Position, towards: Direction, map: &SimpleGrid) -> Option<Position> {
-if (position.0 + towards.0) as usize >= map[0].len() || (position.1 + towards.1) as usize >= map.len() || (position.0 + towards.0) < 0 || (position.1 + towards.1) < 0 {
+if (position.0 as isize + towards.0) as usize >= map[0].len() || (position.1 as isize + towards.1) as usize >= map.len() || (position.0 as isize + towards.0) < 0 || (position.1 as isize + towards.1) < 0 {
         return None
     }
     else {
-        return Some((position.0 + towards.0, position.1 + towards.1))
+        return Some(((position.0 as isize + towards.0) as usize, (position.1 as isize + towards.1) as usize))
     }
     
+}
+
+fn is_in_bounds(neighbor: Position, map: SimpleGrid) -> bool {
+    let (row, col) = neighbor;
+    row > 0 && row <= map.len() && col > 0 && col <= map[row].len()
 }

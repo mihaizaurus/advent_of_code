@@ -1,14 +1,10 @@
-pub fn result(initial_stones: Vec<u128>) -> isize {
+pub fn result(initial_stones: &Vec<u128>) -> isize {
     let mut stones = initial_stones.clone();
-
-    println!("stones: {:?}",stones);
 
     for _ in 0..25 {
         stones = blink(stones);
-        println!("stones: {:?}",stones);
     }
 
-    // return 55312
     return stones.len() as isize;
 }
 

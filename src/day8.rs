@@ -12,7 +12,7 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
     for frequency in frequencies {
         let frequency_positions: Vec<Position> = antenna_grid.get_frequency_positions(frequency);
         let antinodes: Vec<Position> = antenna_grid.get_antinodes_positions(&frequency_positions);
-        let total_antinodes: Vec<Position> = antenna_grid.get_total_antinodes_positions(frequency,&frequency_positions);
+        let total_antinodes: Vec<Position> = antenna_grid.get_total_antinodes_positions(&frequency_positions);
         for antinode in antinodes {
             antinode_positions.insert(antinode);
         }
@@ -79,7 +79,7 @@ impl AntennaGrid {
             for col in 0..self.grid[row].len() {
                 let char = self.grid[row].chars().nth(col).unwrap();
                 if char == frequency {
-                    positions.push((col as isize, row as isize));
+                    positions.push((col, row));
                 }
             }
         }
@@ -99,8 +99,8 @@ impl AntennaGrid {
                 let frq4 = move_to(frq2, '-', delta);
 
                 for frq in [frq3,frq4] {
-                    if frq.1 >= 0 && frq.1 < self.grid.len() as isize {
-                        if frq.0 >= 0 && frq.0 < self.grid[0].len() as isize {
+                    if frq.1 < self.grid.len() {
+                        if frq.0 < self.grid[0].len() {
                             antinodes.push(frq);
                         }
                     }
@@ -110,7 +110,7 @@ impl AntennaGrid {
         return antinodes
     }
 
-    fn get_total_antinodes_positions(&self, frequency: char, frequency_positions: &Vec<Position>) -> Vec<Position> {
+    fn get_total_antinodes_positions(&self, frequency_positions: &Vec<Position>) -> Vec<Position> {
         let mut antinodes = Vec::new();
 
         for i in 0..frequency_positions.len() {
@@ -125,14 +125,14 @@ impl AntennaGrid {
                 loop {
                     let mut valid = false;
 
-                    if frq3.1 >= 0 && frq3.1 < self.grid.len() as isize 
-                        && frq3.0 >= 0 && frq3.0 < self.grid[0].len() as isize 
+                    if frq3.1 < self.grid.len() 
+                        && frq3.0 < self.grid[0].len() 
                         {
                             antinodes.push(frq3);
                             valid = true;
                         } 
-                    if frq4.1 >= 0 && frq4.1 < self.grid.len() as isize 
-                        && frq4.0 >= 0 && frq4.0 < self.grid[0].len() as isize 
+                    if frq4.1 < self.grid.len() 
+                        && frq4.0 < self.grid[0].len() 
                         {
                             antinodes.push(frq4);
                             valid = true;
@@ -155,14 +155,14 @@ impl AntennaGrid {
 
 fn move_to(position: Position, sign: char, direction: Direction) -> Position {
     match sign {
-        '+' => (position.0 + direction.0 , position.1 + direction.1),
-        '-' => (position.0 - direction.0 , position.1 - direction.1),
+        '+' => ((position.0 as isize + direction.0) as usize , (position.1 as isize + direction.1) as usize),
+        '-' => ((position.0 as isize - direction.0) as usize , (position.1 as isize - direction.1) as usize),
         _ => (0,0)
     }
 }
 
 fn get_difference(pos1: Position, pos2:Position) -> Direction {
-    (pos1.0 - pos2.0 , pos1.1 - pos2.1)
+    (pos1.0 as isize - pos2.0 as isize , pos1.1 as isize - pos2.1 as isize)
 }
 
 fn draw_antinodes(grid: SimpleGrid, antinode_positions: &HashSet<Position>) -> SimpleGrid {

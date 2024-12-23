@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::{self, BufRead, BufReader, Write};
+use std::result;
 use super::types::{Position,SimpleGrid,DIRECTIONS, Direction};
 use std::collections::HashSet;
 
@@ -20,6 +21,46 @@ pub fn get_input_as_grid(input_path: &str) -> io::Result<Vec<String>> {
         grid.push(line);
     }
     Ok(grid)
+}
+
+pub fn get_input_as_vector(input_path: &str) -> io::Result<Vec<usize>> {
+    let file = match File::open(input_path) {
+        Ok(file) => file,
+        Err(error) => {
+            eprintln!("Error: Failed to open file at {}. Details: {}", input_path, error);
+            return Err(error);
+        }
+    };
+    let mut reader = BufReader::new(file);
+    let mut line = String::new();
+    reader.read_line(&mut line)?;
+
+    let result: Vec<usize> = line
+        .split_whitespace()
+        .filter_map(|x| x.parse().ok())
+        .collect();
+
+    Ok(result)
+}
+
+pub fn get_input_as_vector_128(input_path: &str) -> io::Result<Vec<u128>> {
+    let file = match File::open(input_path) {
+        Ok(file) => file,
+        Err(error) => {
+            eprintln!("Error: Failed to open file at {}. Details: {}", input_path, error);
+            return Err(error);
+        }
+    };
+    let mut reader = BufReader::new(file);
+    let mut line = String::new();
+    reader.read_line(&mut line)?;
+
+    let result: Vec<u128> = line
+        .split_whitespace()
+        .filter_map(|x| x.parse().ok())
+        .collect();
+
+    Ok(result)
 }
 
 pub fn write_result(output_path: &str, grid: &Vec<String>) -> io::Result<()> {    

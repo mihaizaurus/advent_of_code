@@ -16,8 +16,8 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
         }
     };
 
-    let part1 = part1::result(input_stones);
-    let part2 = part2::result();
+    let part1 = part1::result(&input_stones);
+    let part2 = part2::result(&input_stones) as isize;
 
     
     let answer: PuzzleAnswer = (part1, part2);

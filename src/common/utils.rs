@@ -1,8 +1,6 @@
 use std::fs::File;
 use std::io::{self, BufRead, BufReader, Write};
-use std::result;
 use super::types::{Position,SimpleGrid,DIRECTIONS, Direction};
-use std::collections::HashSet;
 
 pub fn get_input_as_grid(input_path: &str) -> io::Result<Vec<String>> {
     let file = match File::open(input_path) {

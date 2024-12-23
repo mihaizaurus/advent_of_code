@@ -2,8 +2,8 @@ use AdventOfCode2024::day9;
 
 #[test]
 fn test_day9() {
-    let input_path = format!("inputs/day9_test.txt"); 
-    let output_path = format!("results/day9_test.txt");
+    let input_path = format!("inputs/test/day9.txt"); 
+    let output_path = format!("results/test/day9.txt");
 
     let (part1,part2) = day9::result(&input_path, &output_path).unwrap();
 

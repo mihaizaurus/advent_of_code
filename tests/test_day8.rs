@@ -2,8 +2,8 @@ use AdventOfCode2024::day8;
 
 #[test]
 fn test_day8() {
-    let input_path = format!("inputs/day8_test.txt"); 
-    let output_path = format!("results/day8_test.txt");
+    let input_path = format!("inputs/test/day8.txt"); 
+    let output_path = format!("results/test/day8.txt");
 
     let (part1,part2) = day8::result(&input_path, &output_path).unwrap();
 

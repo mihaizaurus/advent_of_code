@@ -1,7 +1,7 @@
 use crate::common::{types::{Position, SimpleGrid, DIRECTIONS}, utils::{get_char_at, move_from}};
 use std::collections::HashSet;
 
-pub fn result(farm: &Vec<String>) -> isize {
+pub fn result(farm: &SimpleGrid) -> isize {
     // get plots as contiguous range of same char value (plant type)
     // get perimeter and area of each
 

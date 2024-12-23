@@ -1,4 +1,4 @@
-use AdventOfCode2024::day10;
+use AdventOfCode2024::calendar::day10;
 
 #[test]
 fn test_day10() {

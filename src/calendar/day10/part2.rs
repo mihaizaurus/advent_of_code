@@ -1,6 +1,5 @@
 use crate::common::types::{Position,SimpleGrid};
 use crate::common::utils::{get_char_at, get_neighbors};
-use std::collections::HashSet;
 
 pub fn result(map: &SimpleGrid) -> isize {
     

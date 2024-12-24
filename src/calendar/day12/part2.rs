@@ -39,9 +39,44 @@ fn get_edges(region: &Vec<Position>, farm: &Vec<String>) -> HashSet<Edge> {
 }
 
 fn consolidate_sides(edges: HashSet<Edge>) -> usize {
-    let mut grouped_edges: HashMap<(usize, Direction),Vec<Position>> = HashMap::new();   
+    let mut grouped_edges: HashMap<(Direction, usize), Vec<Position>> = HashMap::new();
 
-    todo!("Implement sides consolidation from edges");
+    // Group edges by their direction and shared axis
+    for edge in edges {
+        let (position, direction, _) = edge;
+
+        // Group edges by direction and shared coordinate axis
+        if direction.0 == 0 {
+            // Horizontal edge, group by Y-axis
+            grouped_edges.entry((direction, position.1)).or_default().push(position);
+        } else {
+            // Vertical edge, group by X-axis
+            grouped_edges.entry((direction, position.0)).or_default().push(position);
+        }
+    }
+
+    let mut consolidated_count = 0;
+
+    // Consolidate edges in each group
+    for (_key, mut group) in grouped_edges {
+        // Sort positions within the group
+        group.sort();
+
+        // Merge contiguous positions
+        let mut previous = group[0];
+        for &position in &group[1..] {
+            if position.0 != previous.0 + 1 && position.1 != previous.1 + 1 {
+                // Break in continuity: finalize the current segment
+                consolidated_count += 1;
+            }
+            previous = position;
+        }
+
+        // Count the final segment
+        consolidated_count += 1;
+    }
+
+    consolidated_count
 }
 
 fn farm_as_map(farm: &Vec<String>) -> Vec<(String,Vec<Position>)> {

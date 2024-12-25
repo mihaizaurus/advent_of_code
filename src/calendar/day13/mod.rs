@@ -19,10 +19,6 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
 
     let machines = get_machines_from_input(&raw_input_data);
 
-    for machine in &machines {
-        println!("{:?}",machine);
-    }
-
     let part1 = part1::result(&machines);
     let part2 = part2::result(&machines);
 

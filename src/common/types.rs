@@ -1,3 +1,5 @@
+use core::fmt;
+
 pub type Position = (usize, usize);
 pub type Direction = (isize, isize);
 pub type Edge = (Position, Direction, Option<Position>);
@@ -17,3 +19,31 @@ pub const DIAGONALS: [Direction;4] = [
     (1,1),      // Down-Right Diagonal
     (-1,1),     // Down-Left Diagonal
 ];
+
+pub struct Machine {
+    button_a: Direction,
+    button_b: Direction,
+    prize_location: Position
+}
+
+impl Machine {
+    pub fn new(button_a: Direction, button_b: Direction, prize_location: Position) -> Machine {
+        Machine {
+            button_a,
+            button_b,
+            prize_location
+        }
+    }
+}
+
+impl fmt::Display for Machine {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Machine: Button A: {:?}, Button B: {:?}, Prize Location: {:?}", self.button_a, self.button_b, self.prize_location)
+    }
+}
+
+impl fmt::Debug for Machine {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Machine: Button A: {:?}, Button B: {:?}, Prize Location: {:?}", self.button_a, self.button_b, self.prize_location)
+    }
+}

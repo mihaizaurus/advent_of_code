@@ -8,12 +8,11 @@ pub fn result(farm: &SimpleGrid) -> isize {
     let regions = farm_as_map(farm);
     let mut total_price = 0;
     
-    for (key,region) in regions {
+    for (_,region) in regions {
         let area = region.len();
         let edges = get_edges(&region, &farm);
         let sides = consolidate_sides(edges);
         let price = area * sides;
-        println!("region: [{key}] has area {area}, {sides} sides and price {price}");
         total_price += price;
     }
 

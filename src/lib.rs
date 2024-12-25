@@ -5,6 +5,7 @@ pub mod calendar {
     pub mod day10;
     pub mod day11;
     pub mod day12;
+    pub mod day13;
 }
 
 pub mod common;
@@ -34,6 +35,7 @@ pub fn run_day(day: usize) -> Result<PuzzleAnswer, String> {
         10 => calendar::day10::result(&input_path, &output_path).map_err(|e| e.to_string()),
         11 => calendar::day11::result(&input_path, &output_path).map_err(|e| e.to_string()),
         12 => calendar::day12::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        13 => calendar::day13::result(&input_path, &output_path).map_err(|e| e.to_string()),
         _ => Err(format!("Day {} is not implemented or understood...", day)),
     }
 }

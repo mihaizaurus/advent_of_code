@@ -34,6 +34,14 @@ impl Machine {
             prize_location
         }
     }
+
+    pub fn get_buttons(&self) -> (Direction, Direction) {
+        (self.button_a, self.button_b)
+    }
+
+    pub fn get_prize_location(&self) -> Position {
+        self.prize_location
+    }
 }
 
 impl fmt::Display for Machine {

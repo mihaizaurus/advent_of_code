@@ -42,6 +42,12 @@ impl Machine {
     pub fn get_prize_location(&self) -> Position {
         self.prize_location
     }
+
+    pub fn update_prize_location(&mut self) -> &Self {
+        let prize_location = (self.prize_location.0 + 10000000000000, self.prize_location.1 + 10000000000000);
+        self.prize_location = prize_location;
+        self
+    }
 }
 
 impl fmt::Display for Machine {

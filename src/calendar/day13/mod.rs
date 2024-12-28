@@ -17,10 +17,10 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
         }
     };
 
-    let machines = get_machines_from_input(&raw_input_data);
+    let mut machines = get_machines_from_input(&raw_input_data);
 
     let part1 = part1::result(&machines);
-    let part2 = part2::result(&machines);
+    let part2 = part2::result(&mut machines);
 
     
     let answer: PuzzleAnswer = (part1, part2);

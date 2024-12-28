@@ -1,2 +1,2 @@
-Puzzle 1 answer: 480
+Puzzle 1 answer: 31065
 Puzzle 2 answer: 0

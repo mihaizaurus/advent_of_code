@@ -77,6 +77,18 @@ pub fn write_result(output_path: &str, grid: &Vec<String>) -> io::Result<()> {
     Ok(())
 }
 
+pub fn set(map: &mut Vec<String>, position: Position, c: char) {
+    let x = position.0 as usize;
+    let y = position.1 as usize;
+    if let Some(row) = map.get_mut(y) {
+        let mut chars: Vec<char> = row.chars().collect();
+        if let Some(ch) = chars.get_mut(x) {
+            *ch = c;
+        }
+        *row = chars.into_iter().collect();
+    }
+}
+
 pub fn get_char_at((col, row): (usize, usize), map: &SimpleGrid) -> String {
     return map[row as usize].chars().nth(col as usize).unwrap().to_string()
 }

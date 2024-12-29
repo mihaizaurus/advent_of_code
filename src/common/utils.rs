@@ -101,8 +101,7 @@ if (position.0 as isize + towards.0) as usize >= map[0].len() || (position.1 as 
     }
     else {
         return Some(((position.0 as isize + towards.0) as usize, (position.1 as isize + towards.1) as usize))
-    }
-    
+    }    
 }
 
 fn is_in_bounds(neighbor: Position, map: SimpleGrid) -> bool {

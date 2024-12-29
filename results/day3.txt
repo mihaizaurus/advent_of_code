@@ -1,2 +1,0 @@
-sum of multipliers = 178794710
-corrected sum of 'do()' multipliers = 76729637

@@ -1,0 +1,2 @@
+distance sum = 2756096
+similarity score = 23117829

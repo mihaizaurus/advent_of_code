@@ -5,7 +5,7 @@ use std::io;
 use std::io::Write;
 use std::fs::File;
 use regex::Regex;
-use crate::common::types::{Robot, SimpleGrid, Direction, Position, PuzzleAnswer};
+use crate::common::types::{Robot, PuzzleAnswer};
 use crate::common::utils::get_input_as_grid;
 
 pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {

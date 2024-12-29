@@ -116,8 +116,8 @@ impl Grid {
     fn get(&self, position: Position) -> Result<char,()> {
         let x = position.0 as usize;
         let y = position.1 as usize;
-        if y >= 0 && y < self.data.len() {
-            if x >=0 && x < self.data[y].len() {
+        if y < self.data.len() {
+            if x < self.data[y].len() {
                 return Ok(self.data[y].chars().nth(x).unwrap())
             }
             else {
@@ -170,17 +170,6 @@ impl Grid {
         Ok(visited)
 
     }
-
-    fn get_potential_obstacles(&self) {
-
-    
-
-    }
-
-    // fn does_obstacle_cause_loop(&self, x:isize, y:isize, (dx, dy):(isize,isize)) -> bool{
-    //     let mut is_loop = false;
-
-    // }
 
     fn is_obstacle_ahead(&self, position: Position, direction: Direction) -> bool {
         let (x,y) = position;

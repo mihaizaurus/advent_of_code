@@ -25,7 +25,7 @@ pub fn result(robots: &mut Vec<Robot>, map_size: (usize, usize)) -> isize {
             (x,y) if x > map_x / 2 && y > map_y / 2 => quadrant_scores[3] += 1,
             _ => ()
         }
-        // println!("{:?}, Quadrant scores: {:?}", robot.get_position(), quadrant_scores);
+        println!("{:?}, Quadrant scores: {:?}", robot.get_position(), quadrant_scores);
     }
 
     quadrant_scores[0] * quadrant_scores[1] * quadrant_scores[2] * quadrant_scores[3]

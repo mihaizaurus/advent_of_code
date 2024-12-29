@@ -8,5 +8,5 @@ fn test_day14() {
     let (part1,part2) = day14::result(&input_path, &output_path).unwrap();
 
     assert_eq!(part1, 12, "part 1 mismatch for day 14");
-    assert_eq!(part2, 0, "part 2 mismatch for day 14");
+    assert_eq!(part2, 20, "part 2 mismatch for day 14");
 }

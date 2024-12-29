@@ -1,4 +1,4 @@
-use advent_of_code_2024::day8;
+use advent_of_code_2024::calendar::day8;
 
 #[test]
 fn test_day8() {

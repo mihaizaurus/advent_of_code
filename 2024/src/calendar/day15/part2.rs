@@ -15,7 +15,7 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_instructions: String) -> isi
         if next tile is a [ or ] -> crate, could be moved, track it and check next position, 
         if next tile is a . -> empty space, robot plus tracked elements could move there
         if next tile is a # -> wall, cannot move, go to next instruction 
-        note that in part 2, as the boxes are wider, a situation could arise where a tree branches off to an obstacle:
+        note that in part 2, as the boxes are wider, a situation could arise where a tree branches off to an obstacle when the direction is ^ or v:
         #
         []
          []
@@ -24,39 +24,50 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_instructions: String) -> isi
            @
            
            instruction ^ could not move this situation 
+           should maybe log boxes as pairs of coordinates (left, right): (Position, Position) and track ^ and v together and < and > together with separate logics
            must always check when [ or ] the pair's obstacles ahead */
 
         let mut act = false;
-        let mut obstacle_ahead = false;
+        
         let mut next_start = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
 
-
-
-        while !act {
-            let (next_x, next_y) = next_start;
-            match get_char_at((next_x, next_y), warehouse_map).as_str() {
-                "[" | "]" => {
-                    obstacle_ahead = true;
-                },
-                "." => {
-                    if obstacle_ahead == true {
-                        todo!("correct box moving");
-                        // set(warehouse_map, (next_x, next_y), 'O');
-                    }
-                    // move robot
-                    set(warehouse_map, ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize), '@');
-                    set(warehouse_map, robot_position, '.');
-                    robot_position = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
-                    act = true;
-                },
-                "#" => {
-                    // skip turn
-                    act = true;
-                },
-                _ => {}
-            }
-            next_start = ((next_start.0 as isize + direction.0) as usize, (next_start.1 as isize + direction.1) as usize);
-        }        
+        if direction == (-1,0) || direction == (1,0) { // Left or Right, easy logic like part 1.
+            let mut obstacle_ahead = false;
+            while !act {
+                let (next_x, next_y) = next_start;
+                match get_char_at((next_x, next_y), warehouse_map).as_str() {
+                    "[" | "]" => {
+                        obstacle_ahead = true
+                    },
+                    "." => {
+                        if obstacle_ahead == true {
+                            todo!("finalize implementation");
+                            if direction == (-1,0) {
+                                set(warehouse_map, (next_x, next_y), ']');
+                                set(warehouse_map, (next_x - 1, next_y), '[');
+                                set(warehouse_map, (next_x - 1, next_y), '.');
+                            }
+                            else if direction == (1,0) {
+                                set(warehouse_map, (next_x, next_y), '[');
+                                set(warehouse_map, (next_x + 1, next_y), ']');
+                            }
+                        }
+                        // move robot
+                        set(warehouse_map, ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize), '@');
+                        set(warehouse_map, robot_position, '.');
+                        robot_position = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
+                        act = true;
+                    },
+                    "#" => {
+                        // skip turn
+                        act = true;
+                    },
+                    _ => {}
+                }
+                next_start = ((next_start.0 as isize + direction.0) as usize, (next_start.1 as isize + direction.1) as usize);
+            } 
+        }
+               
         
     }
 

@@ -17,9 +17,11 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
     };
 
     let (mut warehouse_map, robot_start, robot_instructions) = split_raw_input(&raw_input_data);
+    let mut warehouse_map_2 = warehouse_map.clone();
+    let robot_instructions_2 = robot_instructions.clone();
 
     let part1 = part1::result(&mut warehouse_map, robot_start, robot_instructions);
-    let part2 = part2::result();
+    let part2 = part2::result(&mut warehouse_map_2, robot_instructions_2);
 
     
     let answer: PuzzleAnswer = (part1, part2);

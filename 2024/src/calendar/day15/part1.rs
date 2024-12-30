@@ -45,7 +45,7 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_start: Position, robot_instr
         
     }
 
-    println!("{:#?}",warehouse_map);
+    println!("Part 1: \n {:#?}",warehouse_map);
     calculate_score(warehouse_map)
 }
 

@@ -41,9 +41,9 @@ fn get_machines_from_input(input: &SimpleGrid) -> Vec<Machine> {
 }
 
 fn get_machine(raw_machine: Vec<String>) -> Machine {
-    let mut button_a: Direction = (0,0);
-    let mut button_b: Direction = (0,0);
-    let mut prize_location: Position = (0,0);
+    let mut button_a: Direction = Direction(0,0);
+    let mut button_b: Direction = Direction(0,0);
+    let mut prize_location: Position = Position(0,0);
     
     let button_pattern_x = r"X\+(\d+)";
     let button_pattern_y = r"Y\+(\d+)";

@@ -28,8 +28,8 @@ fn get_score(machine: &Machine) -> isize {
 
 fn get_lowest_moves(machine: &Machine) -> Option<(usize, usize)> {
 
-    let ((ax,ay), (bx, by)) = machine.get_buttons();
-    let (px, py) = machine.get_prize_location();
+    let (Direction(ax,ay), Direction(bx, by)) = machine.get_buttons();
+    let Position(px, py) = machine.get_prize_location();
 
     let (gcd_x,_,_) = get_gcd(ax, bx);
     let (gcd_y,_,_) = get_gcd(ay, by);
@@ -83,82 +83,6 @@ fn get_moves_from(v1: isize, v2: isize, v_target: usize, is_b: bool) -> Vec<(usi
     } 
 
     moves
-}
-
-fn check_x_then_y(button_a: Direction, button_b: Direction, prize_location: Position) -> Option<(usize, usize)> {
-    let (ax, _) = button_a;
-    let (bx, _) = button_b;
-    let (px, _) = prize_location;
-    let mut a_moves = 0;
-    let mut b_moves = 0;
-    if ax > bx {
-        let mut remains = px % ax as usize ;
-        let mut correct = false;
-        if remains >= px {
-            return None;
-        }
-        while correct == false && remains < px {
-            if remains % bx as usize == 0 {
-                correct = true;
-            } else {
-                remains += ax as usize;
-            }
-        }
-        a_moves = (px - remains) / ax as usize;
-        b_moves = (px - (ax as usize * a_moves)) / bx as usize;
-    }
-    else if bx > ax {
-        let mut remains = px % bx as usize ;
-        let mut correct = false;
-        if remains >= px {
-            return None;
-        }
-        while correct == false {
-            if remains % ax as usize == 0 {
-                correct = true;
-            } else {
-                remains += bx as usize;
-            }
-        }
-        b_moves = (px - remains) / bx as usize;
-        a_moves = (px - (bx as usize * b_moves)) / ax as usize;
-    }    
-    return Some((a_moves, b_moves));
-}
-
-fn check_y_then_x(button_a: Direction, button_b: Direction, prize_location: Position) -> (usize, usize) {
-    let (_, ay) = button_a;
-    let (_, by) = button_b;
-    let (_, py) = prize_location;
-    let mut a_moves = 0;
-        let mut b_moves = 0;
-        if ay > by {
-            let mut remains = py % ay as usize ;
-            let mut correct = false;
-            while correct == false {
-                if remains % by as usize == 0 {
-                    correct = true;
-                } else {
-                    remains += ay as usize;
-                }
-            }
-            a_moves = (py - remains) / ay as usize;
-            b_moves = (py - (ay as usize * a_moves)) / by as usize;
-        }
-        else if by > ay {
-            let mut remains = py % by as usize ;
-            let mut correct = false;
-            while correct == false {
-                if remains % ay as usize == 0 {
-                    correct = true;
-                } else {
-                    remains += by as usize;
-                }
-            }
-            b_moves = (py - remains) / by as usize;
-            a_moves = (py - (by as usize * b_moves)) / ay as usize;
-        }    
-        return (a_moves, b_moves);
 }
 
 fn get_gcd(a: isize, b: isize) -> (isize, isize, isize) {

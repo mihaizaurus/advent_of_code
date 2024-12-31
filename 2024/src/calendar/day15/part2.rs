@@ -31,31 +31,31 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_instructions: String) -> isi
         
         let mut next_start = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
 
-        if direction == (-1,0) || direction == (1,0) { // Left or Right, easy logic like part 1.
+        if direction == Direction(-1,0) || direction == Direction(1,0) { // Left or Right, easy logic like part 1.
             let mut obstacle_ahead = false;
             while !act {
                 let (next_x, next_y) = next_start;
-                match get_char_at((next_x, next_y), warehouse_map).as_str() {
+                match get_char_at(Position(next_x, next_y), warehouse_map).as_str() {
                     "[" | "]" => {
                         obstacle_ahead = true
                     },
                     "." => {
                         if obstacle_ahead == true {
                             todo!("finalize implementation");
-                            if direction == (-1,0) {
-                                set(warehouse_map, (next_x, next_y), ']');
-                                set(warehouse_map, (next_x - 1, next_y), '[');
-                                set(warehouse_map, (next_x - 1, next_y), '.');
+                            if direction == Direction(-1,0) {
+                                set(warehouse_map, Position(next_x, next_y), ']');
+                                set(warehouse_map, Position(next_x - 1, next_y), '[');
+                                set(warehouse_map, Position(next_x - 1, next_y), '.');
                             }
-                            else if direction == (1,0) {
-                                set(warehouse_map, (next_x, next_y), '[');
-                                set(warehouse_map, (next_x + 1, next_y), ']');
+                            else if direction == Direction(1,0) {
+                                set(warehouse_map, Position(next_x, next_y), '[');
+                                set(warehouse_map, Position(next_x + 1, next_y), ']');
                             }
                         }
                         // move robot
-                        set(warehouse_map, ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize), '@');
+                        set(warehouse_map, robot_position + direction, '@');
                         set(warehouse_map, robot_position, '.');
-                        robot_position = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
+                        robot_position += direction;
                         act = true;
                     },
                     "#" => {
@@ -76,12 +76,12 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_instructions: String) -> isi
 }
 
 fn get_updated_robot_position(warehouse_map: &SimpleGrid) -> Position {
-    let mut robot_position: Position = (0,0);
+    let mut robot_position: Position = Position(0,0);
 
     for row in 0..warehouse_map.len() {
         for col in 0..warehouse_map[0].len() {
             if warehouse_map[row].chars().nth(col).unwrap() == '@' {
-                robot_position = (col, row)
+                robot_position = Position(col, row)
             }
         }
     }
@@ -103,7 +103,7 @@ fn widen_map(warehouse_map: &mut SimpleGrid) {
 }
 
 fn get_direction_from_instruction(instruction: char) -> Direction{
-    let mut direction = (0,0);
+    let mut direction = Direction(0,0);
     match instruction {
         '^' => {
             direction = DIRECTIONS[0];
@@ -128,7 +128,7 @@ fn calculate_score(warehouse_map: &SimpleGrid) -> isize {
     let mut score = 0;
     for row in 0..warehouse_map.len() {
         for col in 0..warehouse_map[0].len() {
-            if get_char_at((col,row), warehouse_map) == "[" {
+            if get_char_at(Position(col,row), warehouse_map) == "[" {
                 score += (100 * row) + col;
             }
         }

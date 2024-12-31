@@ -58,11 +58,11 @@ fn split_raw_input(raw_input_data: &Vec<String>) -> (SimpleGrid, Position, Strin
 }
 
 fn get_robot_start(warehouse_map: &Vec<String>) -> Position {
-    let mut position: Position = (0,0);
+    let mut position: Position = Position(0,0);
     for row in 0..warehouse_map.len() {
         for col in 0..warehouse_map[0].len() {
             if warehouse_map[row].chars().nth(col).unwrap() == '@' {
-                position = (col, row)
+                position = Position(col, row)
             }
         }
     }

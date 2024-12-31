@@ -5,7 +5,7 @@ use std::io;
 use std::io::Write;
 use std::fs::File;
 use regex::Regex;
-use crate::common::types::{Robot, PuzzleAnswer};
+use crate::common::types::{Robot, PuzzleAnswer, Position, Direction};
 use crate::common::utils::get_input_as_grid;
 
 pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
@@ -42,8 +42,8 @@ pub fn get_robots_from_input(raw_input_data: Vec<String>) -> Vec<Robot> {
         let re = Regex::new(robot_pattern).unwrap();
 
         for (_,[px,py,vx,vy]) in re.captures_iter(&raw_input).map(|c| c.extract()) {
-            let position = (px.parse::<usize>().unwrap(), py.parse::<usize>().unwrap());
-            let velocity = (vx.parse::<isize>().unwrap(), vy.parse::<isize>().unwrap());
+            let position = Position(px.parse::<usize>().unwrap(), py.parse::<usize>().unwrap());
+            let velocity = Direction(vx.parse::<isize>().unwrap(), vy.parse::<isize>().unwrap());
             let robot = Robot::new(position, velocity);
             robots.push(robot);
         }

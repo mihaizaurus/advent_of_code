@@ -74,12 +74,12 @@ impl AntennaGrid {
     }
 
     fn get_frequency_positions(&self, frequency: char) -> Vec<Position> {
-        let mut positions = Vec::new();
+        let mut positions: Vec<Position> = Vec::new();
         for row in 0..self.grid.len() {
             for col in 0..self.grid[row].len() {
                 let char = self.grid[row].chars().nth(col).unwrap();
                 if char == frequency {
-                    positions.push((col, row));
+                    positions.push(Position(col, row));
                 }
             }
         }
@@ -155,20 +155,20 @@ impl AntennaGrid {
 
 fn move_to(position: Position, sign: char, direction: Direction) -> Position {
     match sign {
-        '+' => ((position.0 as isize + direction.0) as usize , (position.1 as isize + direction.1) as usize),
-        '-' => ((position.0 as isize - direction.0) as usize , (position.1 as isize - direction.1) as usize),
-        _ => (0,0)
+        '+' => Position((position.0 as isize + direction.0) as usize , (position.1 as isize + direction.1) as usize),
+        '-' => Position((position.0 as isize - direction.0) as usize , (position.1 as isize - direction.1) as usize),
+        _ => Position(0,0)
     }
 }
 
 fn get_difference(pos1: Position, pos2:Position) -> Direction {
-    (pos1.0 as isize - pos2.0 as isize , pos1.1 as isize - pos2.1 as isize)
+    Direction(pos1.0 as isize - pos2.0 as isize , pos1.1 as isize - pos2.1 as isize)
 }
 
 fn draw_antinodes(grid: SimpleGrid, antinode_positions: &HashSet<Position>) -> SimpleGrid {
     let mut drawn_grid: SimpleGrid = grid.clone();
 
-    for (col, row) in antinode_positions {
+    for Position(col, row) in antinode_positions {
         let col_index = *col as usize;
         let row_index = *row as usize;
 

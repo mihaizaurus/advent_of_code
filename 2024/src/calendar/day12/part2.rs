@@ -84,8 +84,8 @@ fn farm_as_map(farm: &Vec<String>) -> Vec<(String,Vec<Position>)> {
 
     for row in 0..farm.len() {
         for col in 0..farm[row].len() {
-            let position: Position = (col, row );
-            let char = get_char_at((col,row), farm);
+            let position: Position = Position(col, row );
+            let char = get_char_at(Position(col,row), farm);
             if visited_cells.contains(&position) {                
                 continue;
             }

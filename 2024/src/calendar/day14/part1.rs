@@ -1,4 +1,4 @@
-use crate::common::types::Robot;
+use crate::common::types::{Robot, Position};
 
 pub fn result(robots: &mut Vec<Robot>, map_size: (usize, usize)) -> isize {
     // simulate robots moving over x seconds while wrapping around the edges
@@ -15,7 +15,7 @@ pub fn result(robots: &mut Vec<Robot>, map_size: (usize, usize)) -> isize {
     }
 
     for robot in robots.iter() {
-        let (x,y) = robot.get_position();
+        let Position(x,y) = robot.get_position();
         let (map_x, map_y) = map_size;
 
         match (x,y) {

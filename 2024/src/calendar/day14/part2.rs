@@ -1,4 +1,4 @@
-use crate::common::types::Robot;
+use crate::common::types::{Robot, Position};
 
 use std::io::Write;
 use std::fs::File;
@@ -21,7 +21,7 @@ pub fn result(robots: &mut Vec<Robot>, map_size: (usize, usize), output_path: &s
         }
 
         for robot in robots.iter() {
-            let (x,y) = robot.get_position();
+            let Position(x,y) = robot.get_position();
             let mut row_chars: Vec<char> = grid[y].chars().collect();
             row_chars[x] = '#';
             grid[y] = row_chars.iter().collect();
@@ -36,7 +36,7 @@ pub fn result(robots: &mut Vec<Robot>, map_size: (usize, usize), output_path: &s
     }
 
     for robot in robots.iter() {
-        let (x,y) = robot.get_position();
+        let Position(x,y) = robot.get_position();
         let (map_x, map_y) = map_size;
 
         match (x,y) {

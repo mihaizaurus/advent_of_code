@@ -20,18 +20,18 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_start: Position, robot_instr
 
         while !act {
             let (next_x, next_y) = next_start;
-            match get_char_at((next_x, next_y), warehouse_map).as_str() {
+            match get_char_at(Position(next_x, next_y), warehouse_map).as_str() {
                 "O" => {
                     obstacle_ahead = true;
                 },
                 "." => {
                     if obstacle_ahead == true {
-                        set(warehouse_map, (next_x, next_y), 'O');
+                        set(warehouse_map, Position(next_x, next_y), 'O');
                     }
                     // move robot
-                    set(warehouse_map, ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize), '@');
+                    set(warehouse_map, robot_position + direction, '@');
                     set(warehouse_map, robot_position, '.');
-                    robot_position = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
+                    robot_position += direction;
                     act = true;
                 },
                 "#" => {
@@ -50,7 +50,7 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_start: Position, robot_instr
 }
 
 fn get_direction_from_instruction(instruction: char) -> Direction{
-    let mut direction = (0,0);
+    let mut direction = Direction(0,0);
     match instruction {
         '^' => {
             direction = DIRECTIONS[0];
@@ -75,7 +75,7 @@ fn calculate_score(warehouse_map: &SimpleGrid) -> isize {
     let mut score = 0;
     for row in 0..warehouse_map.len() {
         for col in 0..warehouse_map[0].len() {
-            if get_char_at((col,row), warehouse_map) == "O" {
+            if get_char_at(Position(col,row), warehouse_map) == "O" {
                 score += (100 * row) + col;
             }
         }

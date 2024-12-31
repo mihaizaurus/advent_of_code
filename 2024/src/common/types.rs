@@ -1,24 +1,71 @@
 use core::fmt;
+use std::ops::{Add, AddAssign};
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Ord, PartialOrd)]
+pub struct Position(pub usize, pub usize);
 
-pub type Position = (usize, usize);
-pub type Direction = (isize, isize);
+impl Add<Direction> for Position {
+    type Output = Position;
+
+    fn add(self, dir: Direction) -> Self::Output {
+        let new_x = (self.0 as isize + dir.0) as usize;
+        let new_y = (self.1 as isize + dir.1) as usize;
+        Position(new_x, new_y)
+    }
+}
+
+impl AddAssign<Direction> for Position {
+    fn add_assign(&mut self, dir: Direction) {
+        self.0 = (self.0 as isize + dir.0) as usize;
+        self.1 = (self.1 as isize + dir.1) as usize;
+    }
+}
+
+impl fmt::Display for Position {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({},{})", self.0, self.1)
+    }
+}
+
+impl fmt::Debug for Position {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({},{})", self.0, self.1)
+    }
+}
+
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Ord, PartialOrd)]
+pub struct Direction(pub isize, pub isize);
+
+impl fmt::Display for Direction {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({},{})", self.0, self.1)
+    }
+}
+
+impl fmt::Debug for Direction {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "({},{})", self.0, self.1)
+    }
+}
+
 pub type Edge = (Position, Direction, Option<Position>);
 pub type PuzzleAnswer = (isize, isize);
 pub type SimpleGrid = Vec<String>;
 
 pub const DIRECTIONS: [Direction;4] = [
-    (0,-1),     // Up
-    (1,0),      // Right
-    (0,1),      // Down
-    (-1,0),     // Left
+    Direction(0,-1),     // Up
+    Direction(1,0),      // Right
+    Direction(0,1),      // Down
+    Direction(-1,0),     // Left
 ];
 
 pub const DIAGONALS: [Direction;4] = [
-    (-1,-1),    // Up-Left Diagonal
-    (1,-1),     // Up-Right Diagonal
-    (1,1),      // Down-Right Diagonal
-    (-1,1),     // Down-Left Diagonal
+    Direction(-1,-1),    // Up-Left Diagonal
+    Direction(1,-1),     // Up-Right Diagonal
+    Direction(1,1),      // Down-Right Diagonal
+    Direction(-1,1),     // Down-Left Diagonal
 ];
+
+
 
 pub struct Machine {
     button_a: Direction,
@@ -44,7 +91,7 @@ impl Machine {
     }
 
     pub fn update_prize_location(&mut self) -> &Self {
-        let prize_location = (self.prize_location.0 + 10000000000000, self.prize_location.1 + 10000000000000);
+        let prize_location = Position(self.prize_location.0 + 10000000000000, self.prize_location.1 + 10000000000000);
         self.prize_location = prize_location;
         self
     }
@@ -102,7 +149,7 @@ impl Robot {
             new_y = new_y + map_y as isize;
         }
 
-        self.position = (new_x as usize, new_y as usize);
+        self.position = Position(new_x as usize, new_y as usize);
         self
     }
 }

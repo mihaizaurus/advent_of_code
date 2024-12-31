@@ -89,7 +89,7 @@ pub fn set(map: &mut Vec<String>, position: Position, c: char) {
     }
 }
 
-pub fn get_char_at((col, row): (usize, usize), map: &SimpleGrid) -> String {
+pub fn get_char_at(Position(col, row): Position, map: &SimpleGrid) -> String {
     return map[row as usize].chars().nth(col as usize).unwrap().to_string()
 }
 
@@ -98,7 +98,7 @@ pub fn get_neighbors(start: Position, neighbor: String, map: &SimpleGrid) -> Vec
 
     for direction in DIRECTIONS {
         if let Some(new_pos) = move_from(start, direction, &map) {
-            if get_char_at((new_pos.0 as usize, new_pos.1 as usize), map) == neighbor {
+            if get_char_at(Position(new_pos.0 as usize, new_pos.1 as usize), map) == neighbor {
                 neighbors.push(new_pos);
             };
         }        
@@ -112,11 +112,11 @@ if (position.0 as isize + towards.0) as usize >= map[0].len() || (position.1 as 
         return None
     }
     else {
-        return Some(((position.0 as isize + towards.0) as usize, (position.1 as isize + towards.1) as usize))
+        return Some(position + towards)
     }    
 }
 
 fn is_in_bounds(neighbor: Position, map: SimpleGrid) -> bool {
-    let (row, col) = neighbor;
+    let Position(row, col) = neighbor;
     row > 0 && row <= map.len() && col > 0 && col <= map[row].len()
 }

@@ -11,41 +11,25 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_instructions: String) -> isi
     for instruction in instructions {
         let direction = get_direction_from_instruction(instruction);
 
-        /* Check if robot can move in direction.
-        if next tile is a [ or ] -> crate, could be moved, track it and check next position, 
-        if next tile is a . -> empty space, robot plus tracked elements could move there
-        if next tile is a # -> wall, cannot move, go to next instruction 
-        note that in part 2, as the boxes are wider, a situation could arise where a tree branches off to an obstacle when the direction is ^ or v:
-        #
-        []
-         []
-          [][]
-           []
-           @
-           
-           instruction ^ could not move this situation 
-           should maybe log boxes as pairs of coordinates (left, right): (Position, Position) and track ^ and v together and < and > together with separate logics
-           must always check when [ or ] the pair's obstacles ahead */
-
         let mut act = false;
         
-        let mut next_start = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
+        let mut next_start = robot_position + direction;
 
         if direction == Direction(-1,0) || direction == Direction(1,0) { // Left or Right, easy logic like part 1.
-            let mut obstacle_ahead = false;
+            let mut obstacle_ahead = false;             
             while !act {
-                let (next_x, next_y) = next_start;
+                let Position(next_x, next_y) = next_start;
                 match get_char_at(Position(next_x, next_y), warehouse_map).as_str() {
                     "[" | "]" => {
                         obstacle_ahead = true
                     },
                     "." => {
                         if obstacle_ahead == true {
-                            todo!("finalize implementation");
                             if direction == Direction(-1,0) {
                                 set(warehouse_map, Position(next_x, next_y), ']');
                                 set(warehouse_map, Position(next_x - 1, next_y), '[');
-                                set(warehouse_map, Position(next_x - 1, next_y), '.');
+                                // set(warehouse_map, Position(next_x + 1, next_y), '.');
+                                // .[][][]@
                             }
                             else if direction == Direction(1,0) {
                                 set(warehouse_map, Position(next_x, next_y), '[');
@@ -64,7 +48,7 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_instructions: String) -> isi
                     },
                     _ => {}
                 }
-                next_start = ((next_start.0 as isize + direction.0) as usize, (next_start.1 as isize + direction.1) as usize);
+                next_start += direction;
             } 
         }
                
@@ -73,6 +57,80 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_instructions: String) -> isi
 
     println!("Part 2: \n {:#?}",warehouse_map);
     calculate_score(warehouse_map)
+}
+
+#[derive(Debug)]
+struct Crate {
+    left: Position,
+    right: Position
+}
+
+fn can_move(warehouse_map: &SimpleGrid, crate_to_check: Crate, direction: Direction) -> bool {
+    match direction {
+        Direction(-1,0) | Direction(1,0) => {
+            let crate_edge =  if direction == Direction (-1,0) {crate_to_check.left} else {crate_to_check.right};
+            match get_char_at(crate_edge + direction, warehouse_map).as_str() {
+                "[" | "]" => {
+                    let next_crate = Crate {
+                        left: crate_to_check.left + direction + direction,
+                        right: crate_to_check.right + direction + direction
+                    };
+                    return can_move(warehouse_map, next_crate, direction)
+                },
+                "." => return true,
+                "#" => return false,
+                _ => panic!("Left Panicked!")
+            }
+        },
+        Direction(0,1) | Direction(0,-1) => {
+            let mut was_checked = false;
+            let can_move_left = match get_char_at(crate_to_check.left + direction, warehouse_map).as_str() {
+                "[" => {
+                    let next_crate = Crate {
+                        left: crate_to_check.left + direction,
+                        right: crate_to_check.right + direction
+                    };
+                    was_checked = true;
+                    can_move(warehouse_map, next_crate, direction)
+                }, 
+                "]" => {
+                    let next_crate = Crate {
+                        left: crate_to_check.left + direction + Direction(-1,0),
+                        right: crate_to_check.left + direction
+                    };
+                    can_move(warehouse_map, next_crate, direction)
+                },
+                "." => true,
+                "#" => false,
+                _ => panic!("Left Panicked!")
+            };
+            let can_move_right = match get_char_at(crate_to_check.right + direction, warehouse_map).as_str() {
+                "[" => {
+                    let next_crate = Crate {
+                        left: crate_to_check.right + direction,
+                        right: crate_to_check.right + direction + Direction(1,0)
+                    };
+                    can_move(warehouse_map, next_crate, direction)
+                }, 
+                "]" => {
+                    if was_checked == true {println!("Crate to check: {:?} HELP!!!!!",crate_to_check); return true}
+                    let next_crate = Crate {
+                        left: crate_to_check.left + direction,
+                        right: crate_to_check.right + direction
+                    };
+                    can_move(warehouse_map, next_crate, direction)
+                },
+                "." => true,
+                "#" => false,
+                _ => panic!("Right Panicked!")
+            };
+            println!("Crate to check: {:?} !!!!!",crate_to_check);
+            if can_move_left == true && can_move_right == true {return true} else {return false}
+        },
+        _ => panic!("Direction Undefined!")
+    } 
+        
+    
 }
 
 fn get_updated_robot_position(warehouse_map: &SimpleGrid) -> Position {

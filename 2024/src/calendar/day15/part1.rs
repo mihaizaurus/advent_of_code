@@ -16,10 +16,10 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_start: Position, robot_instr
         if next tile is a # -> wall, cannot move, go to next instruction */
         let mut act = false;
         let mut obstacle_ahead = false;
-        let mut next_start = ((robot_position.0 as isize + direction.0) as usize, (robot_position.1 as isize + direction.1) as usize);
+        let mut next_start = robot_position + direction;
 
         while !act {
-            let (next_x, next_y) = next_start;
+            let Position(next_x, next_y) = next_start;
             match get_char_at(Position(next_x, next_y), warehouse_map).as_str() {
                 "O" => {
                     obstacle_ahead = true;
@@ -40,7 +40,7 @@ pub fn result(warehouse_map: &mut SimpleGrid, robot_start: Position, robot_instr
                 },
                 _ => {}
             }
-            next_start = ((next_start.0 as isize + direction.0) as usize, (next_start.1 as isize + direction.1) as usize);
+            next_start += direction;
         }        
         
     }

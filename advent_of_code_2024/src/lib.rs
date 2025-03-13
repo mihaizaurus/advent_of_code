@@ -20,7 +20,7 @@ pub mod calendar {
 
 pub fn run_day(day: usize) -> Result<PuzzleAnswer, String> {
     let input_path = format!("advent_of_code_2024/inputs/day{}.txt", day); 
-    let output_path = format!("advent_of_code_2024/results/day{}.txt", day); 
+    let output_path = format!("advent_of_code_results/2024/day{}.txt", day); 
 
     match day {
         1 => calendar::day1::result().map_err(|e| e.to_string()),

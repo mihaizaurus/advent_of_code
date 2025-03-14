@@ -2,8 +2,8 @@ use advent_of_code_2024::puzzle::day10;
 
 #[test]
 fn test_day10() {
-    let input_path = format!("inputs/test/day10.txt"); 
-    let output_path = format!("results/test/day10.txt");
+    let input_path = format!("advent_of_code_inputs/2024/test/day10.txt"); 
+    let output_path = format!("advent_of_code_results/2024/test/day10.txt");
 
     let (part1,part2) = day10::result(&input_path, &output_path).unwrap();
 

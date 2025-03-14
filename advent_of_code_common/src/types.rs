@@ -37,6 +37,16 @@ impl SubAssign<Direction> for Position {
     }
 }
 
+impl Sub<Position> for Position {
+    type Output = Direction;
+
+    fn sub(self, dir: Position) -> Self::Output {
+        let new_x = self.0 as isize - dir.0 as isize;
+        let new_y = self.1 as isize - dir.1 as isize;
+        Direction(new_x, new_y)
+    }
+}
+
 impl fmt::Display for Position {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({},{})", self.0, self.1)

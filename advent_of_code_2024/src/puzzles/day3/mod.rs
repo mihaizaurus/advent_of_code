@@ -2,9 +2,7 @@ use std::fs::File;
 use std::io::{self, Read, Write};
 use regex::Regex;
 
-pub fn result() -> io::Result<(isize, isize)> {
-    let input_path = "inputs/day3.txt";
-    let output_path = "results/day3.txt";
+pub fn result(input_path: &str, output_path: &str) -> io::Result<(isize, isize)> {
     
     let input_string = get_inputs(input_path)?;
     let sum_of_mult = sum_of_mult(&input_string)?;

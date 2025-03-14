@@ -1,9 +1,7 @@
 use std::fs::File;
 use std::io::{self, BufRead, Write};
 
-pub fn result() -> io::Result<(isize, isize)> {
-    let input_path = "inputs/day5.txt";
-    let output_path = "results/day5.txt";
+pub fn result(input_path: &str, output_path: &str) -> io::Result<(isize, isize)> {
 
     let (update_rules, updates) = get_input_data(input_path)?;
     let (validated_updates,disordered_updates) = validated_updates(updates, &update_rules)?;

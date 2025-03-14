@@ -1,9 +1,7 @@
 use std::fs::File;
 use std::io::{self,BufRead, Write};
 
-pub fn result() -> io::Result<(isize, isize)> {
-    let input_path = "inputs/day1.txt";
-    let output_path = "results/day1.txt";
+pub fn result(input_path: &str, output_path: &str) -> io::Result<(isize, isize)> {
     let (mut list_left, mut list_right) = get_inputs(input_path)?;
 
     list_left.sort();

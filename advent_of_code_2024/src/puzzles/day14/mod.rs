@@ -28,7 +28,6 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
 
     
     let answer: PuzzleAnswer = (part1, part2);
-    println!("Part 1: {part1} \n Part 2: {part2}");
     // write_answer(output_path, answer)?;
     Ok(answer)
 }

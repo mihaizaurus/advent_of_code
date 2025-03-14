@@ -1,9 +1,7 @@
 use std::fs::File;
 use std::io::{self,BufRead, Write};
 
-pub fn result() -> io::Result<(isize, isize)> {
-    let input_path = "inputs/day4.txt";
-    let output_path = "results/day4.txt";
+pub fn result(input_path: &str, output_path: &str) -> io::Result<(isize, isize)> {
 
     const WORD: &str = "XMAS";
     

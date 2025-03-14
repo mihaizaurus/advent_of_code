@@ -1,18 +1,18 @@
 use std::fs::File;
 use std::io::{self,BufRead, Write};
 
-pub fn result() -> io::Result<(isize, isize)> {
-    let input_path = "inputs/day2.txt";
-    let output_path = "results/day2.txt";
+pub fn result(input_path: &str, output_path: &str) -> io::Result<(isize, isize)> {
     
     let reports_list = get_inputs(input_path)?;
     let mut file = File::create(output_path)?;
     
-    let safe_reports = get_safe_reports(reports_list)?;
+    let safe_reports = get_safe_reports(reports_list.clone())?;
+    let dampened_safe_reports = get_dampened_safe_reports(reports_list.clone())?;
 
     writeln!(file, "Number of safe reports = {}",safe_reports.len())?;
+    writeln!(file, "Number of dampened safe reports = {}",dampened_safe_reports.len())?;
 
-    Ok((safe_reports.len() as isize, safe_reports.len() as isize))
+    Ok((safe_reports.len() as isize, dampened_safe_reports.len() as isize))
 }
 
 fn get_inputs(path: &str) -> io::Result<Vec<Vec<i32>>> {
@@ -35,6 +35,18 @@ fn get_inputs(path: &str) -> io::Result<Vec<Vec<i32>>> {
 }
 
 fn get_safe_reports(reports_list: Vec<Vec<i32>>) -> io::Result<Vec<Vec<i32>>> {
+    let mut safe_repports = Vec::new();
+
+    for report in reports_list {
+        if is_report_safe(&report) {
+            safe_repports.push(report)
+        };
+    }
+
+    Ok(safe_repports)
+}
+
+fn get_dampened_safe_reports(reports_list: Vec<Vec<i32>>) -> io::Result<Vec<Vec<i32>>> {
     let mut safe_repports = Vec::new();
 
     for report in reports_list {

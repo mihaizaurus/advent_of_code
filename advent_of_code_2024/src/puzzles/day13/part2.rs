@@ -22,7 +22,6 @@ fn get_score(machine: &Machine) -> isize {
     if moves != (0,0) {
         score = 3 * moves.0 + moves.1;
     }
-    println!("{:?}, moves: {:?}, score: {}", machine, &moves, score);
 
     score as isize
 }
@@ -35,8 +34,6 @@ fn get_lowest_moves(machine: &Machine) -> Option<(usize, usize)> {
     let (gcd_x,_,_) = get_gcd(ax, bx);
     let (gcd_y,_,_) = get_gcd(ay, by);
 
-    println!("GCD X: {}, GCD Y: {}", gcd_x, gcd_y);
-
     if px % gcd_x as usize != 0 && py % gcd_y as usize != 0 {
         return None
     }
@@ -48,10 +45,7 @@ fn get_lowest_moves(machine: &Machine) -> Option<(usize, usize)> {
     let a = ((py as isize * bx - px as isize * by) / (bx * ay - ax * by)).abs();
     let b = (px as isize - ax * a) / bx;
 
-    println!("a: {}, b: {}", a, b);
-
     if a * ax + b * bx == px as isize && a * ay + b * by == py as isize {
-        println!("I come here");
         return Some((a as usize, b as usize))
     }
     else {

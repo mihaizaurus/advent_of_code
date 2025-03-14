@@ -1,3 +1,9 @@
 [workspace]
 
-members = ["advent_of_code_common", "advent_of_code_2024"]
+members = [
+    "advent_of_code_common",
+    "advent_of_code_inputs",
+    "advent_of_code_results",
+    "advent_of_code_2024",
+]
+resolver = "3"

@@ -1,12 +1,27 @@
-use advent_of_code_2024::puzzle::day9;
+use advent_of_code_common::utils::{get_test_input_path, get_test_results_path};
+use advent_of_code_2024::puzzles::day9;
+
+mod common;
+use common::input_file_exists;
 
 #[test]
-fn test_day9() {
-    let input_path = format!("advent_of_code_inputs/2024/test/day9.txt"); 
-    let output_path = format!("advent_of_code_results/2024/test/day9.txt");
+fn day9_input_test() {
+    let input_path = get_test_input_path(2024,9,None);
+    assert!(input_file_exists(input_path.to_str().unwrap()));
+}
 
-    let (part1,part2) = day9::result(&input_path, &output_path).unwrap();
+#[test]
+fn day9_part1() {
+    let input_path = get_test_input_path(2024,9,None);
+    let output_path = get_test_results_path(2024,9,None);
+    let (part1,_) = day9::result(&input_path.to_str().unwrap(), &output_path.to_str().unwrap()).unwrap();
+    assert_eq!(part1, 1928, "part 1 mismatch for day 9");
+}
 
-    assert_eq!(part1, 1928, "part 1 mismatch for day 8");
-    assert_eq!(part2, 2858, "part 2 mismatch for day 8");
+#[test]
+fn day9_part2() {
+    let input_path = get_test_input_path(2024,9,None);
+    let output_path = get_test_results_path(2024,9,None);
+    let (_,part2) = day9::result(&input_path.to_str().unwrap(), &output_path.to_str().unwrap()).unwrap();
+    assert_eq!(part2, 2858, "part 2 mismatch for day 9");
 }

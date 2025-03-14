@@ -1,2 +1,0 @@
-number of occurrences of 'XMAS' found = 2534
-number of occurrences of 'X-MAS' found = 1866

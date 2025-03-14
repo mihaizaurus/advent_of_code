@@ -13,7 +13,7 @@ fn main() {
 
     match args[1].parse::<usize>() {
         Ok(day) => {
-            if let Err(err) = run_day(day) {
+            if let Err(err) = run_day(2024, day) {
                 eprintln!("Error running day {}: {}", day, err);
             }
         },

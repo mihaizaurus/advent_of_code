@@ -1,12 +1,12 @@
 use std::env;
 use std::path::PathBuf;
-use std::fs;
-use std::fs::File;
+use std::fs::{self, File};
 use std::io::{self, BufRead, BufReader, Write};
 use super::types::{Position,SimpleGrid,DIRECTIONS, Direction};
 
-pub fn get_test_input_path(year: usize, day: usize) -> PathBuf {
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join(format!("{}", year)).join("tests").join(format!("day{}.txt", day));
+pub fn get_test_input_path(year: usize, day: usize, suffix: Option<&str>) -> PathBuf {
+    let suffix = suffix.unwrap_or("");
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
     let canonical_path = path.canonicalize().unwrap_or(path.clone());
 
     // For Windows, strip `\\?\` prefix if present 
@@ -19,15 +19,16 @@ pub fn get_test_input_path(year: usize, day: usize) -> PathBuf {
     canonical_path
 }
 
-pub fn get_test_results_path(year: usize, day: usize) -> PathBuf {
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join(format!("{}", year)).join("tests").join(format!("day{}.txt", day));
+pub fn get_test_results_path(year: usize, day: usize, suffix: Option<&str>) -> PathBuf {
+    let suffix = suffix.unwrap_or("");
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
 
     //create folders if missing 
     if let Some(parent) = path.parent() {
         if let Err(e) = fs::create_dir_all(parent) {
             eprintln!("Failed to create directory {:?}: {}", parent, e);
         } else {
-            println!("Created or verified directory {:?}", parent);
+            // println!("Created or verified directory {:?}", parent);
         }
     }
 

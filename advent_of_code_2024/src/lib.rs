@@ -19,7 +19,7 @@ pub mod puzzle {
 }
 
 pub fn run_day(day: usize) -> Result<PuzzleAnswer, String> {
-    let input_path = format!("advent_of_code_2024/inputs/day{}.txt", day); 
+    let input_path = format!("advent_of_code_inputs/2024/day{}.txt", day); 
     let output_path = format!("advent_of_code_results/2024/day{}.txt", day); 
 
     match day {

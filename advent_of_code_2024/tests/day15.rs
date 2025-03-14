@@ -1,4 +1,4 @@
-use advent_of_code_2024::calendar::day15;
+use advent_of_code_2024::puzzle::day15;
 
 #[test]
 fn test_day15_large() {

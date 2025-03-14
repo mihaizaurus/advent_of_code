@@ -1,6 +1,85 @@
+use std::env;
+use std::path::PathBuf;
+use std::fs;
 use std::fs::File;
 use std::io::{self, BufRead, BufReader, Write};
 use super::types::{Position,SimpleGrid,DIRECTIONS, Direction};
+
+pub fn get_test_input_path(year: usize, day: usize) -> PathBuf {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join(format!("{}", year)).join("tests").join(format!("day{}.txt", day));
+    let canonical_path = path.canonicalize().unwrap_or(path.clone());
+
+    // For Windows, strip `\\?\` prefix if present 
+    if let Some(stripped) = canonical_path.to_str() {
+        if stripped.starts_with(r"\\?\") {
+            return PathBuf::from(&stripped[4..]);
+        }
+    }
+
+    canonical_path
+}
+
+pub fn get_test_results_path(year: usize, day: usize) -> PathBuf {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join(format!("{}", year)).join("tests").join(format!("day{}.txt", day));
+
+    //create folders if missing 
+    if let Some(parent) = path.parent() {
+        if let Err(e) = fs::create_dir_all(parent) {
+            eprintln!("Failed to create directory {:?}: {}", parent, e);
+        } else {
+            println!("Created or verified directory {:?}", parent);
+        }
+    }
+
+    let canonical_path = path.canonicalize().unwrap_or(path.clone());
+    
+    // For Windows, strip `\\?\` prefix if present 
+    if let Some(stripped) = canonical_path.to_str() {
+        if stripped.starts_with(r"\\?\") {
+            return PathBuf::from(&stripped[4..]);
+        }
+    }
+
+    canonical_path
+}
+
+pub fn get_puzzle_input_path(year: usize, day: usize) -> PathBuf {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
+    let canonical_path = path.canonicalize().unwrap_or(path.clone());
+
+    // For Windows, strip `\\?\` prefix if present 
+    if let Some(stripped) = canonical_path.to_str() {
+        if stripped.starts_with(r"\\?\") {
+            return PathBuf::from(&stripped[4..]);
+        }
+    }
+
+    canonical_path
+}
+
+pub fn get_puzzle_results_path(year: usize, day: usize) -> PathBuf {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
+
+    //create folders if missing 
+    if let Some(parent) = path.parent() {
+        if let Err(e) = fs::create_dir_all(parent) {
+            eprintln!("Failed to create directory {:?}: {}", parent, e);
+        } else {
+            println!("Created or verified directory {:?}", parent);
+        }
+    }
+
+    let canonical_path = path.canonicalize().unwrap_or(path.clone());
+    
+    // For Windows, strip `\\?\` prefix if present 
+    if let Some(stripped) = canonical_path.to_str() {
+        if stripped.starts_with(r"\\?\") {
+            return PathBuf::from(&stripped[4..]);
+        }
+    }
+
+    canonical_path
+}
 
 pub fn get_input_as_grid(input_path: &str) -> io::Result<Vec<String>> {
     let file = match File::open(input_path) {

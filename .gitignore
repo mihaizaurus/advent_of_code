@@ -1,7 +1,5 @@
 target
 advent_of_code_inputs/
 advent_of_code_results/
-scripts/
 .vscode
 .envrc
-justfile

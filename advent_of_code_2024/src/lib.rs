@@ -1,6 +1,6 @@
 use advent_of_code_common::types::PuzzleAnswer;
 
-pub mod puzzle {
+pub mod puzzles {
     pub mod day1;
     pub mod day2;
     pub mod day3;
@@ -23,21 +23,21 @@ pub fn run_day(day: usize) -> Result<PuzzleAnswer, String> {
     let output_path = format!("advent_of_code_results/2024/day{}.txt", day); 
 
     match day {
-        1 => puzzle::day1::result().map_err(|e| e.to_string()),
-        2 => puzzle::day2::result().map_err(|e| e.to_string()),
-        3 => puzzle::day3::result().map_err(|e| e.to_string()),
-        4 => puzzle::day4::result().map_err(|e| e.to_string()),
-        5 => puzzle::day5::result().map_err(|e| e.to_string()),
-        6 => puzzle::day6::result().map_err(|e| e.to_string()),
-        7 => puzzle::day7::result().map_err(|e| e.to_string()),
-        8 => puzzle::day8::result(&input_path, &output_path).map_err(|e| e.to_string()),
-        9 => puzzle::day9::result(&input_path, &output_path).map_err(|e| e.to_string()),
-        10 => puzzle::day10::result(&input_path, &output_path).map_err(|e| e.to_string()),
-        11 => puzzle::day11::result(&input_path, &output_path).map_err(|e| e.to_string()),
-        12 => puzzle::day12::result(&input_path, &output_path).map_err(|e| e.to_string()),
-        13 => puzzle::day13::result(&input_path, &output_path).map_err(|e| e.to_string()),
-        14 => puzzle::day14::result(&input_path, &output_path).map_err(|e| e.to_string()),
-        15 => puzzle::day15::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        1 => puzzles::day1::result().map_err(|e| e.to_string()),
+        2 => puzzles::day2::result().map_err(|e| e.to_string()),
+        3 => puzzles::day3::result().map_err(|e| e.to_string()),
+        4 => puzzles::day4::result().map_err(|e| e.to_string()),
+        5 => puzzles::day5::result().map_err(|e| e.to_string()),
+        6 => puzzles::day6::result().map_err(|e| e.to_string()),
+        7 => puzzles::day7::result().map_err(|e| e.to_string()),
+        8 => puzzles::day8::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        9 => puzzles::day9::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        10 => puzzles::day10::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        11 => puzzles::day11::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        12 => puzzles::day12::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        13 => puzzles::day13::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        14 => puzzles::day14::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        15 => puzzles::day15::result(&input_path, &output_path).map_err(|e| e.to_string()),
         _ => Err(format!("Day {} is not implemented or understood...", day)),
     }
 }

@@ -10,15 +10,12 @@ use dotenv::dotenv;
 #[derive(Parser, Debug)]
 #[clap(version, about = "Fetches Advent of Code inputs")]
 struct Args {
-    /// The year of the Advent of Code event
     #[clap(short, long)]
     year: u32,
 
-    /// The day of the challenge (1-25)
     #[clap(short, long)]
     day: u32,
 
-    /// The root working directory (for flexibility)
     #[clap(long, default_value = ".")]
     cwd: PathBuf,
 }
@@ -46,14 +43,11 @@ fn main() {
     if response.status().is_success() {
         let input = response.text().expect("Failed to read response");
 
-        // Construct the correct directory path
         let input_dir = args.cwd.join(format!("advent_of_code_inputs/calendar/{}/puzzles", args.year));
         let input_path = input_dir.join(format!("day{}.txt", args.day));
 
-        // Ensure directory exists
         fs::create_dir_all(&input_dir).expect("Failed to create input directory");
         
-        // Write input to file
         let mut file = fs::File::create(&input_path)
             .expect("Failed to create input file");
         file.write_all(input.as_bytes())

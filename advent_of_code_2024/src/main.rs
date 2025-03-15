@@ -17,6 +17,6 @@ fn main() {
                 eprintln!("Error running day {}: {}", day, err);
             }
         },
-        Err(_) => eprintln!("Invalid Input. Please enter a valid day number. (Range 1-24)")
+        Err(_) => eprintln!("Invalid Input. Please enter a valid day number. (Range 1-25)")
     }
 }

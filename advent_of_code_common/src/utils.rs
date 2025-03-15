@@ -6,7 +6,7 @@ use super::types::{Position,SimpleGrid,DIRECTIONS, Direction};
 
 pub fn get_test_input_path(year: usize, day: usize, suffix: Option<&str>) -> PathBuf {
     let suffix = suffix.unwrap_or("");
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join("calendar").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
     let canonical_path = path.canonicalize().unwrap_or(path.clone());
 
     // For Windows, strip `\\?\` prefix if present 
@@ -21,7 +21,7 @@ pub fn get_test_input_path(year: usize, day: usize, suffix: Option<&str>) -> Pat
 
 pub fn get_test_results_path(year: usize, day: usize, suffix: Option<&str>) -> PathBuf {
     let suffix = suffix.unwrap_or("");
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join("calendar").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
 
     //create folders if missing 
     if let Some(parent) = path.parent() {
@@ -45,7 +45,7 @@ pub fn get_test_results_path(year: usize, day: usize, suffix: Option<&str>) -> P
 }
 
 pub fn get_puzzle_input_path(year: usize, day: usize) -> PathBuf {
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join("calendar").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
     let canonical_path = path.canonicalize().unwrap_or(path.clone());
 
     // For Windows, strip `\\?\` prefix if present 
@@ -59,7 +59,7 @@ pub fn get_puzzle_input_path(year: usize, day: usize) -> PathBuf {
 }
 
 pub fn get_puzzle_results_path(year: usize, day: usize) -> PathBuf {
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join("calendar").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
 
     //create folders if missing 
     if let Some(parent) = path.parent() {

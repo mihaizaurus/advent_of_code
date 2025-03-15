@@ -1,6 +1,6 @@
 target
-advent_of_code_inputs/2024
-advent_of_code_results/2024
+advent_of_code_inputs/calendar
+advent_of_code_results/calendar
 .vscode
 .env
 .envrc

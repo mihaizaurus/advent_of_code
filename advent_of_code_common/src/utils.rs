@@ -1,29 +1,41 @@
+use super::types::{DIRECTIONS, Direction, Position, SimpleGrid};
 use std::env;
-use std::path::PathBuf;
 use std::fs::{self, File};
 use std::io::{self, BufRead, BufReader, Write};
-use super::types::{Position,SimpleGrid,DIRECTIONS, Direction};
+use std::path::PathBuf;
 
 pub fn get_test_input_path(year: usize, day: usize, suffix: Option<&str>) -> PathBuf {
     let suffix = suffix.unwrap_or("");
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join("calendar").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
+    let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    path.pop();
+    let path = path
+        .join("advent_of_code_inputs")
+        .join("calendar")
+        .join(format!("{}", year))
+        .join("tests")
+        .join(format!("day{}{}.txt", day, suffix));
     let canonical_path = path.canonicalize().unwrap_or(path.clone());
 
-    // For Windows, strip `\\?\` prefix if present 
+    // For Windows, strip `\\?\` prefix if present
     if let Some(stripped) = canonical_path.to_str() {
         if stripped.starts_with(r"\\?\") {
             return PathBuf::from(&stripped[4..]);
         }
     }
-
     canonical_path
 }
 
 pub fn get_test_results_path(year: usize, day: usize, suffix: Option<&str>) -> PathBuf {
     let suffix = suffix.unwrap_or("");
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join("calendar").join(format!("{}", year)).join("tests").join(format!("day{}{}.txt", day, suffix));
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join("advent_of_code_results")
+        .join("calendar")
+        .join(format!("{}", year))
+        .join("tests")
+        .join(format!("day{}{}.txt", day, suffix));
 
-    //create folders if missing 
+    //create folders if missing
     if let Some(parent) = path.parent() {
         if let Err(e) = fs::create_dir_all(parent) {
             eprintln!("Failed to create directory {:?}: {}", parent, e);
@@ -33,8 +45,8 @@ pub fn get_test_results_path(year: usize, day: usize, suffix: Option<&str>) -> P
     }
 
     let canonical_path = path.canonicalize().unwrap_or(path.clone());
-    
-    // For Windows, strip `\\?\` prefix if present 
+
+    // For Windows, strip `\\?\` prefix if present
     if let Some(stripped) = canonical_path.to_str() {
         if stripped.starts_with(r"\\?\") {
             return PathBuf::from(&stripped[4..]);
@@ -45,10 +57,16 @@ pub fn get_test_results_path(year: usize, day: usize, suffix: Option<&str>) -> P
 }
 
 pub fn get_puzzle_input_path(year: usize, day: usize) -> PathBuf {
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_inputs").join("calendar").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join("advent_of_code_inputs")
+        .join("calendar")
+        .join(format!("{}", year))
+        .join("puzzles")
+        .join(format!("day{}.txt", day));
     let canonical_path = path.canonicalize().unwrap_or(path.clone());
 
-    // For Windows, strip `\\?\` prefix if present 
+    // For Windows, strip `\\?\` prefix if present
     if let Some(stripped) = canonical_path.to_str() {
         if stripped.starts_with(r"\\?\") {
             return PathBuf::from(&stripped[4..]);
@@ -59,9 +77,15 @@ pub fn get_puzzle_input_path(year: usize, day: usize) -> PathBuf {
 }
 
 pub fn get_puzzle_results_path(year: usize, day: usize) -> PathBuf {
-    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("..").join("advent_of_code_results").join("calendar").join(format!("{}", year)).join("puzzles").join(format!("day{}.txt", day));
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join("advent_of_code_results")
+        .join("calendar")
+        .join(format!("{}", year))
+        .join("puzzles")
+        .join(format!("day{}.txt", day));
 
-    //create folders if missing 
+    //create folders if missing
     if let Some(parent) = path.parent() {
         if let Err(e) = fs::create_dir_all(parent) {
             eprintln!("Failed to create directory {:?}: {}", parent, e);
@@ -71,8 +95,8 @@ pub fn get_puzzle_results_path(year: usize, day: usize) -> PathBuf {
     }
 
     let canonical_path = path.canonicalize().unwrap_or(path.clone());
-    
-    // For Windows, strip `\\?\` prefix if present 
+
+    // For Windows, strip `\\?\` prefix if present
     if let Some(stripped) = canonical_path.to_str() {
         if stripped.starts_with(r"\\?\") {
             return PathBuf::from(&stripped[4..]);
@@ -86,14 +110,17 @@ pub fn get_input_as_grid(input_path: &str) -> io::Result<Vec<String>> {
     let file = match File::open(input_path) {
         Ok(file) => file,
         Err(error) => {
-            eprintln!("Error: Failed to open file at {}. Details: {}", input_path, error);
+            eprintln!(
+                "Error: Failed to open file at {}. Details: {}",
+                input_path, error
+            );
             return Err(error);
         }
     };
     let reader = BufReader::new(file);
-    
+
     let mut grid = Vec::new();
-    
+
     for line in reader.lines() {
         let line = line?;
         grid.push(line);
@@ -105,7 +132,10 @@ pub fn get_input_as_vector(input_path: &str) -> io::Result<Vec<usize>> {
     let file = match File::open(input_path) {
         Ok(file) => file,
         Err(error) => {
-            eprintln!("Error: Failed to open file at {}. Details: {}", input_path, error);
+            eprintln!(
+                "Error: Failed to open file at {}. Details: {}",
+                input_path, error
+            );
             return Err(error);
         }
     };
@@ -125,7 +155,10 @@ pub fn get_input_as_vector_128(input_path: &str) -> io::Result<Vec<u128>> {
     let file = match File::open(input_path) {
         Ok(file) => file,
         Err(error) => {
-            eprintln!("Error: Failed to open file at {}. Details: {}", input_path, error);
+            eprintln!(
+                "Error: Failed to open file at {}. Details: {}",
+                input_path, error
+            );
             return Err(error);
         }
     };
@@ -141,17 +174,20 @@ pub fn get_input_as_vector_128(input_path: &str) -> io::Result<Vec<u128>> {
     Ok(result)
 }
 
-pub fn write_result(output_path: &str, grid: &Vec<String>) -> io::Result<()> {    
+pub fn write_result(output_path: &str, grid: &Vec<String>) -> io::Result<()> {
     let mut file = match File::create(output_path) {
         Ok(file) => file,
         Err(error) => {
-            eprintln!("Error: Unable to create file at path {}. Details: {}",output_path,error);
+            eprintln!(
+                "Error: Unable to create file at path {}. Details: {}",
+                output_path, error
+            );
             return Err(error);
         }
     };
 
     for line in grid {
-        writeln!(file, "{}",line)?;
+        writeln!(file, "{}", line)?;
     }
 
     Ok(())
@@ -170,7 +206,11 @@ pub fn set(map: &mut Vec<String>, position: Position, c: char) {
 }
 
 pub fn get_char_at(Position(col, row): Position, map: &SimpleGrid) -> String {
-    return map[row as usize].chars().nth(col as usize).unwrap().to_string()
+    return map[row as usize]
+        .chars()
+        .nth(col as usize)
+        .unwrap()
+        .to_string();
 }
 
 pub fn get_neighbors(start: Position, neighbor: String, map: &SimpleGrid) -> Vec<Position> {
@@ -181,22 +221,26 @@ pub fn get_neighbors(start: Position, neighbor: String, map: &SimpleGrid) -> Vec
             if get_char_at(Position(new_pos.0 as usize, new_pos.1 as usize), map) == neighbor {
                 neighbors.push(new_pos);
             };
-        }        
+        }
     }
 
-    return neighbors
+    return neighbors;
 }
 
 pub fn move_from(position: Position, towards: Direction, map: &SimpleGrid) -> Option<Position> {
-if (position.0 as isize + towards.0) as usize >= map[0].len() || (position.1 as isize + towards.1) as usize >= map.len() || (position.0 as isize + towards.0) < 0 || (position.1 as isize + towards.1) < 0 {
-        return None
+    if (position.0 as isize + towards.0) as usize >= map[0].len()
+        || (position.1 as isize + towards.1) as usize >= map.len()
+        || (position.0 as isize + towards.0) < 0
+        || (position.1 as isize + towards.1) < 0
+    {
+        return None;
+    } else {
+        return Some(position + towards);
     }
-    else {
-        return Some(position + towards)
-    }    
 }
 
 fn is_in_bounds(neighbor: Position, map: SimpleGrid) -> bool {
     let Position(row, col) = neighbor;
     row > 0 && row <= map.len() && col > 0 && col <= map[row].len()
 }
+

@@ -7,7 +7,7 @@ prepare-year year:
     done
 
 prepare-all:
-    for year in {2015..2024}; do \
+    for year in {2015..2025}; do \
         just prepare-year $year; \
     done
 

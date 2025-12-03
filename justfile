@@ -11,3 +11,6 @@ prepare-all:
         just prepare-year $year; \
     done
 
+rebuild:
+    cargo clean
+    cargo build

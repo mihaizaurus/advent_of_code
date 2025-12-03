@@ -29,6 +29,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "advent_of_code_2025"
+version = "0.1.1"
+dependencies = [
+ "advent_of_code_common",
+ "advent_of_code_inputs",
+ "advent_of_code_results",
+ "just",
+ "regex",
+]
+
+[[package]]
 name = "advent_of_code_common"
 version = "0.1.0"
 

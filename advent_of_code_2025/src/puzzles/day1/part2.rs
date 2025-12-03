@@ -1,65 +1,72 @@
-use advent_of_code_common::types::{Direction, SimpleGrid};
+use advent_of_code_common::types::SimpleGrid;
 
 pub fn result(map: &SimpleGrid) -> isize {
     
     let combinations = parse_combinations(map);
     let mut position = 50;
-    let clicks = count_total_clicks(&mut position, combinations);
-    
-    return clicks as isize;
+    let mut crossings = 0;
+    count_total_clicks(&mut crossings, &mut position, combinations);
+
+    return crossings as isize;
 }
 
-fn parse_combinations(map: &SimpleGrid) -> Vec<(String,i16)> {
-    let mut combinations: Vec<(String, i16)> = Vec::new();
-    for item in map {
-        if let Some((direction, count_chars)) = item.chars().collect::<Vec<char>>().split_first() {
-            let count_string:String = count_chars.iter().collect();
-            let count = count_string.parse::<i16>().unwrap();
-            combinations.push((direction.to_string(),count));
-        }
+fn parse_combinations(map: &SimpleGrid) -> Vec<(char,u16)> {
+    let mut combinations: Vec<(char, u16)> = Vec::new();
+    for line in map {
+        if line.is_empty() {continue;} // not really useful here but jic.
+        let (dir, count_chars) = line.split_at(1);
+
+        let direction = dir.chars().nth(0).unwrap();
+        let count = count_chars.parse::<u16>().unwrap();
+        
+        combinations.push((direction,count));
+        
     }
     combinations
 }
 
-fn apply_combination(position: &mut i16, combination: (String, i16)) {
-    let mut temp_pos = *position;
+fn apply_combination(position: &mut u16, combination: (char, u16)) {
     let (direction, count) = combination;
-    if direction == "L" {
-        temp_pos -= count;
-    } else if direction == "R" {
-        temp_pos +=count
-    } else {
-        // no idea
-    }
-    while temp_pos < 0 {
-        temp_pos += 100;
-    }
-    while temp_pos > 99 {
-        temp_pos -= 100;
-    }
-    *position = temp_pos;
+    // let steps = (count.rem_euclid(100)) as u16; // another way to write count % 100...
+    let steps = count % 100;
+    
+    let temp = match direction {
+        'L' => (*position + 100 - steps) % 100,
+        'R' => (*position + steps) % 100,
+        _ => *position
+    };
+
+    *position = temp
 }
 
-fn count_total_clicks(position: &mut i16, combinations: Vec<(String, i16)>) -> i16 {
-    let mut clicks = 0;
-    for (direction, count) in combinations {
-        // Let's redo this entire thing, I hate it
-        let mut temp = match direction.as_str() {
-            "L" => {-count},
-            "R" => {count},
-            _ => {0}
-        };
-        while temp.abs() > 100 {
-            clicks += 1;
-            if direction == "L" {
-                temp += 100
+fn count_total_clicks(crossings: &mut u16, position: &mut u16, combinations: Vec<(char, u16)>) -> u16 {
+    for combination in combinations {
+        let (direction, count) = &combination;
+        let steps = *count;
+        // dbg!(&steps,&count,&direction,&position);
+        if *position > 0 {
+            match direction {
+                'L' => {
+                    if steps >= *position {
+                        let remaining = (steps - *position) as u16;
+                        *crossings += 1 + remaining / 100
+                    }
+                },
+                'R' => {
+                    let dist = 100 - *position;
+                    if steps >= dist {
+                        let remaining = (steps - dist) as u16;
+                        *crossings += 1 + remaining / 100
+                    }
+                },
+                _ => {}
             }
-            else if direction == "R" {
-                temp -= 100
-            }
+        } else {
+            *crossings += steps as u16 / 100
         }
-        // Let's redo up until here
+
+        apply_combination(position, combination);
     }
 
-    clicks
+    *crossings
 }

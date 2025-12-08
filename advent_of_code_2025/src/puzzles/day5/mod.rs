@@ -57,6 +57,7 @@ fn parse_ranges(raw_ranges: &Vec<String>) -> Vec<(usize, usize)> {
         let end = end.parse::<usize>().unwrap();
     ranges.push((start,end));
     }
+    ranges.sort_by(|a,b| a.0.cmp(&b.0).then(a.1.cmp(&b.1)));
     ranges
 }
 

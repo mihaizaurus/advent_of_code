@@ -7,7 +7,7 @@ use advent_of_code_common::types::PuzzleAnswer;
 use advent_of_code_common::utils::get_input_as_grid;
 
 pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
-    let battery_banks = match get_input_as_grid(input_path) {
+    let mut paper_roll_grid = match get_input_as_grid(input_path) {
         Ok(input) => input,
         Err(err) => {
             eprintln!("Input could not be created from file at {}. Details: {}",input_path, err);
@@ -15,9 +15,8 @@ pub fn result(input_path: &str, output_path: &str) -> io::Result<PuzzleAnswer> {
         }
     };
 
-    let part1 = part1::result(&battery_banks);
-    let part2 = part2::result(&battery_banks);
-    // let part2 = 0;
+    let part1 = part1::result(&paper_roll_grid);
+    let part2 = part2::result(&mut paper_roll_grid);
     
     let answer: PuzzleAnswer = (part1, part2);
     write_answer(output_path, answer)?;

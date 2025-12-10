@@ -8,6 +8,7 @@ pub mod puzzles {
     pub mod day4;
     pub mod day5;
     pub mod day6;
+    pub mod day7;
 }
 
 pub fn run_day(year: usize, day: usize) -> Result<PuzzleAnswer, String> {
@@ -23,6 +24,7 @@ pub fn run_day(year: usize, day: usize) -> Result<PuzzleAnswer, String> {
         4 => puzzles::day4::result(&input_path, &output_path).map_err(|e| e.to_string()),
         5 => puzzles::day5::result(&input_path, &output_path).map_err(|e| e.to_string()),
         6 => puzzles::day6::result(&input_path, &output_path).map_err(|e| e.to_string()),
+        7 => puzzles::day7::result(&input_path, &output_path).map_err(|e| e.to_string()),
         _ => Err(format!("Day {} is not implemented or understood...", day)),
     }
 }

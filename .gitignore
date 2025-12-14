@@ -1,6 +1,6 @@
 target
-advent_of_code_inputs/calendar
-advent_of_code_results/calendar
+advent_of_code_inputs
+advent_of_code_results
 .vscode
 .env
 .envrc

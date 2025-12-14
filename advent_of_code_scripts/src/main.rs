@@ -43,7 +43,7 @@ fn main() {
     if response.status().is_success() {
         let input = response.text().expect("Failed to read response");
 
-        let input_dir = args.cwd.join(format!("advent_of_code_inputs/calendar/{}/puzzles", args.year));
+        let input_dir = args.cwd.join(format!("advent_of_code_inputs/{}/puzzles", args.year));
         let input_path = input_dir.join(format!("day{}.txt", args.day));
 
         fs::create_dir_all(&input_dir).expect("Failed to create input directory");

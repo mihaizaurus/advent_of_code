@@ -12,5 +12,14 @@ prepare-all:
     done
 
 rebuild:
-    cargo clean
+    cd advent_of_code_rust && \
+    cargo clean && \
     cargo build
+
+rust-r year day:
+    cargo run --manifest-path advent_of_code_rust/Cargo.toml \
+    -p advent_of_code_{{year}} {{day}}
+
+rust-t year day:
+    cargo test --manifest-path advent_of_code_rust/Cargo.toml \
+    -p advent_of_code_{{year}} day{{day}}

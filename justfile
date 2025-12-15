@@ -16,10 +16,14 @@ rebuild:
     cargo clean && \
     cargo build
 
-rust-r year day:
+rs-r year day:
     cargo run --manifest-path advent_of_code_rust/Cargo.toml \
     -p advent_of_code_{{year}} {{day}}
 
-rust-t year day:
+rs-t year day:
     cargo test --manifest-path advent_of_code_rust/Cargo.toml \
     -p advent_of_code_{{year}} day{{day}}
+
+rs-code:
+    cd advent_of_code_rust && \
+    code .
